@@ -1,0 +1,65 @@
+bool toggle = true;
+#include <SPI.h>
+#include "LCD_Driver.h"
+#include "GUI_Paint.h"
+#include "image.h"
+
+void setup()
+{
+  Config_Init();
+  LCD_Init();
+  LCD_Clear(0xffff);
+  Paint_NewImage(LCD_WIDTH, LCD_HEIGHT, 0, WHITE);
+  Paint_Clear(WHITE);
+Paint_SetRotate(180);
+}
+
+void drawLOGOS(){
+  //cherry
+  Paint_DrawLine(75,170,65,140, BLACK, DOT_PIXEL_2X2,LINE_STYLE_SOLID);
+  Paint_DrawLine(75,170,85,140, BLACK, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+  Paint_DrawCircle(65,130,10, RED, DOT_PIXEL_1X1, DRAW_FILL_FULL);
+  Paint_DrawCircle(85,130,10, RED, DOT_PIXEL_1X1, DRAW_FILL_FULL);
+  //light
+  Paint_DrawRectangle(130,130,150,120,BLACK, DOT_PIXEL_2X2,DRAW_FILL_FULL);
+  Paint_DrawCircle(140,150,30, YELLOW,DOT_PIXEL_1X1, DRAW_FILL_FULL);
+  //health
+  Paint_DrawRectangle(220,165,285,120, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+  Paint_DrawLine(235,165,240,145,BLACK,DOT_PIXEL_1X1, LINE_STYLE_SOLID);
+  Paint_DrawLine(255,165,255,145,BLACK,DOT_PIXEL_1X1, LINE_STYLE_SOLID);
+  Paint_DrawLine(275,165,260,145,BLACK,DOT_PIXEL_1X1, LINE_STYLE_SOLID);
+  Paint_DrawLine(255,120,255,133,RED,DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+}
+
+
+
+void loop()
+{
+  Paint_Clear(WHITE);
+  drawLOGOS();
+  if (toggle) {
+    // Head
+    Paint_DrawCircle(80, 80, 40, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+
+    // Eyes
+    Paint_DrawCircle(65, 70, 5, BLACK, DOT_PIXEL_2X2, DRAW_FILL_FULL);
+    Paint_DrawCircle(95, 70, 5, BLACK, DOT_PIXEL_2X2, DRAW_FILL_FULL);
+
+    // Smile (just a line or arc – here, a line smile)
+    Paint_DrawLine(65, 95, 95, 95, BLACK, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+  }else{
+    //HEAD
+    Paint_DrawCircle(85,80,40, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+    //eyes
+    Paint_DrawCircle(70,70,5, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+    Paint_DrawCircle(100,70,5, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+    //MOUTH
+    Paint_DrawCircle(85,100,10,BLACK, DOT_PIXEL_2X2, DRAW_FILL_FULL);
+    Paint_DrawCircle(85,100,10, BLACK,DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+  }
+  LCD_Display();
+  toggle = !toggle;
+  delay(1000);
+   
+  }
+   
